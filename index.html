@@ -31,13 +31,13 @@
       );
     background-color:var(--paper);
     min-height:100vh;
-    padding-left:60px;
+    padding-left:18px;
     position:relative;
   }
   body::before{
     content:"";
     position:fixed;
-    top:0; left:48px;
+    top:0; left:10px;
     width:2px; height:100%;
     background:var(--margin-line);
     z-index:0;
@@ -45,9 +45,14 @@
   .container{
     max-width:880px;
     margin:0 auto;
-    padding:24px 28px 80px;
+    padding:24px 14px 80px;
     position:relative;
     z-index:1;
+  }
+  @media (min-width:520px){
+    body{ padding-left:60px; }
+    body::before{ left:48px; }
+    .container{ padding:24px 28px 80px; }
   }
   h1{
     font-family:'Zhi Mang Xing', cursive;
@@ -225,7 +230,7 @@
     margin-top:6px;
   }
   .check-btn{
-    background:var(--accent2);
+    background:#5b6cff;
     color:#fff;
     border:none;
     border-radius:20px;
@@ -249,7 +254,9 @@
     margin-top:8px;
     font-size:0.85rem;
     color:#888;
+    display:none;
   }
+  .q-card.checked .answer-key{display:block;}
   .explanation{
     margin-top:12px;
     background:#f4f7ff;
@@ -737,7 +744,7 @@ function renderQuiz(){
     }
     html += `</div>`;
     html += `<div class="btn-row">
-      <button class="check-btn" onclick="checkAnswer(${q.num})">對答案 ✅</button>
+      <button class="check-btn" onclick="checkAnswer(${q.num})">檢查答案（應選 ${q.multi} 項）</button>
       <span class="result-tag hidden" id="result-${q.num}"></span>
     </div>`;
     html += `<div class="answer-key">正確答案：(${q.answer.join(')(')})</div>`;
