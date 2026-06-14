@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基因工程 多重選擇題筆記本</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="tape left"></div>
+    <div class="tape right"></div>
+    <h1 class="notebook-title">🧬 基因工程 多選題筆記本</h1>
+    <p class="notebook-subtitle">共 30 題多重選擇題・每 10 題為一份・點選下方筆記本開始作答</p>
+
+    <div class="set-grid" id="setGrid"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    const emojis = ['📗', '📘', '📙'];
+    const grid = document.getElementById('setGrid');
+
+    QUIZ_SETS.forEach((set, idx) => {
+      const a = document.createElement('a');
+      a.className = 'set-card';
+      a.href = `quiz.html?set=${set.id}`;
+
+      const progressKey = `quiz-progress-set${set.id}`;
+      const saved = localStorage.getItem(progressKey);
+      let progressText = '尚未作答';
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          if (data.score !== undefined) {
+            progressText = `上次成績：${data.score} / ${set.questions.length}`;
+          }
+        } catch (e) {}
+      }
+
+      a.innerHTML = `
+        <span class="set-emoji">${emojis[idx % emojis.length]}</span>
+        <div class="set-name">${set.title}</div>
+        <div class="set-range">第 ${set.range[0]}～${set.range[1]} 題</div>
+        <div class="set-progress">${progressText}</div>
+      `;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+</html>
